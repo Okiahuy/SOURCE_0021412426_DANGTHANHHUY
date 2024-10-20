@@ -1,0 +1,151 @@
+<div id="success-alert" class="alert alert-success" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Thương hiệu đã được thêm thành công!</strong>
+  </div>
+  
+  <div id="edit-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Danh mục đã được sửa thành công!</strong>
+  </div>
+  
+  <div id="del-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Danh mục đã được Xóa thành công!</strong>
+  </div>
+  
+  <div id="err" class="alert alert-danger" style="transition: ease 3s; display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Lỗi! -- Không thể xóa vì sản phẩm đã chứa Thương hiệu!</strong>
+  </div>
+  
+<h2>Thương Hiệu Sản Phẩm</h2>
+<div class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" id="" placeholder="Tìm kiếm . . . . ." #searchName>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="searchBrands(searchName.value)"><i class="fa fa-search"></i></button>
+  </div>
+<hr>
+  <a class="btn btn-sm btn-success" style="padding: 5px; font-size: 15px; background: #198754; color:white;" data-toggle="modal" data-target="#addCategoryModal">
+        THÊM THƯƠNG HIỆU SẢN PHẨM 
+  </a>   
+<br>
+<br>
+<div *ngIf="brands.length > 0; else nocates">
+<table class="table table-hover">
+    <thead class="table table-hover table-dark">    
+        <tr>
+            <th>Mã</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th><i class="ri-settings-5-fill"></i><i class="ri-settings-5-fill"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cate of brands; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{cate.name}}</td>    
+            <td>{{cate.description}}</td>    
+            <td>
+                <a class="btn btn-sm" data-toggle="modal"
+                data-target="#editCategoryModal" (click)="openEditModal(cate)"><i class="ri-edit-2-line"></i></a>
+              |
+                <a class="btn btn-sm" data-toggle="modal"
+                data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;" (click)="openConfirmDeleteModal(cate.brandID)">
+                <i class="ri-delete-bin-7-line"></i></a>
+            </td>
+        </tr>
+    
+        
+    </tbody>
+</table>
+</div>
+
+
+<ng-template #nocates>
+    <p>Không có sản phẩm nào.</p>
+</ng-template>
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCategoryLabel">Thêm Thương Hiệu Sản Phẩm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="brandForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="categoryName">Tên Thương Hiệu</label>
+              <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nhập tên thương hiệu" required>
+            </div>
+            <div class="form-group">
+              <label for="categoryName">Mô tả</label>
+              <input formControlName="description" type="text" class="form-control" id="description" placeholder="Mô tả ... " required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" [disabled]="brandForm.invalid">Thêm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal Sửa Danh Mục -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCategoryLabel">Sửa Thương Hiệu</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editBrandForm" (ngSubmit)="onEditSubmit()">
+                <div class="form-group">
+                  <label for="editTenDanhMuc">Tên Thương hiệu</label>
+                  <input type="text" class="form-control" id="editTenDanhMuc" formControlName="name" required>
+                </div>        
+                <div class="form-group">
+                  <label for="categoryName">Mô tả</label>
+                  <input formControlName="description" type="text" class="form-control" id="description" required>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="editBrandForm.invalid">Lưu</button>
+                  <!-- [disabled]="editCategoryForm.invalid" -->
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+      aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Bạn có chắc chắn muốn xóa thương hiệu này không?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="idToDelete !== null ? deleteBrand(idToDelete) : null">Xóa</button>
+                  <!-- (click)="idToDelete !== null ? deleteCategory(idToDelete) : null" -->
+              </div>
+          </div>
+      </div>
+  </div>
+

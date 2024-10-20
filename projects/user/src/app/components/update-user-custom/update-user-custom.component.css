@@ -1,0 +1,21 @@
+div{
+    
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+form{
+    display: flex;
+    width: 300px;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    border: 1px solid #e9e4e4;
+}
+input{
+    width: 300px;
+    display: end;
+}
+.btn{
+    width: 300px;
+}

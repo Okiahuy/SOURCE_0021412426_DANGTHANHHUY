@@ -1,0 +1,72 @@
+
+<div class="alert alert-info">
+   
+    <strong>Tin tức mỗi ngày!</strong>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " style="display: flex; flex-wrap: wrap;" *ngIf="news.length > 0;">
+    <div *ngFor="let new of news; let i = index" style="display: flex; flex-wrap: wrap;">
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <img [src]="'http://localhost:8081/uploads/'+ new.imageUrl" width="400" height="400">
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            
+        <h1>{{new.title}}</h1>
+        <p><strong>{{new.description}}!</strong></p>
+        
+        
+        </div>
+    </div>
+    
+
+</div>
+<br>
+<!-- Phân trang -->
+<div class="container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)"> &laquo; </a>
+        </li>
+    
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" 
+            [class.active]="i + 1 === currentPage">
+            <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+        </li>
+    
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)"> &raquo; </a>
+        </li>
+        </ul>
+    </nav>
+</div>
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " style="display: flex; flex-wrap: wrap;" *ngIf="news2.length > 0;">
+    <div *ngFor="let new of news2; let i = index" style="display: flex; flex-wrap: wrap;">
+
+        <table class="table table-bordered table-hover justify-content-center">
+            <thead>
+                <tr>
+                    <th> 
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <img [src]="'http://localhost:8081/uploads/'+ new.imageUrl" width="150" height="150">
+                        </div>
+                    </th>
+                    <th> <strong>{{new.title}}!</strong><br>
+                        <p>{{new.description}}!</p>
+                    </th>
+                </tr>
+            
+            </thead>
+        
+        </table>
+
+    </div>
+</div>
+
+
+        
+ 

@@ -1,0 +1,37 @@
+.sidebar {
+    height: 100vh; /* Đặt chiều cao của sidebar là 100% chiều cao viewport */
+    position: fixed; /* Giữ thanh điều hướng cố định */
+    left: 0;
+    width: 300px; /* Độ rộng của sidebar */
+    padding-top: 20px;
+}
+.navbar-nav {
+    width: 280px;
+    top: 0;
+    position: fixed;
+    padding-top: 200px;
+}
+.nav-link {
+    color: white;
+    padding: 10px 20px;
+    display: block;
+    font-size: 20px;
+}
+.nav-link:hover {
+    color: rgb(8, 8, 8);
+    padding: 10px 20px;
+    display: block;
+    font-size: 20px;
+    background-color: aqua;
+}
+.nav_tren{
+    margin-bottom: 20px;
+    
+}
+#img{
+    margin-top: 20px;
+    border-radius: 50%;
+    top: 0;
+    position: fixed;
+    margin-bottom: 20px;
+}

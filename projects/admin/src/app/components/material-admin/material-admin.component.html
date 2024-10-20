@@ -1,0 +1,163 @@
+<div id="success-alert" class="alert alert-success" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Chất liệu đã được thêm thành công!</strong>
+  </div>
+  
+  <div id="edit-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Chất liệu đã được sửa thành công!</strong>
+  </div>
+  
+  <div id="del-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Chất liệu đã được Xóa thành công!</strong>
+  </div>
+  
+  <div id="err" class="alert alert-danger" style="transition: ease 3s; display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Lỗi! -- Không thể xóa vì sản phẩm đã chứa Chất liệu!</strong>
+  </div>
+  
+  
+<h2>Danh Mục Chất liệu</h2>
+<div class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" id="" placeholder="Tìm kiếm . . . . ." #searchName>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="searchMaterials(searchName.value)"><i class="fa fa-search"></i></button>
+  </div>
+
+<hr>
+
+
+  <a class="btn btn-sm btn-success" style="padding: 5px; font-size: 15px; background: #198754; color:white;" data-toggle="modal" data-target="#addCategoryModal">
+        THÊM CHẤT LIỆU SẢN PHẨM 
+  </a>
+    
+<br>
+<br>
+<div *ngIf="materials.length > 0; else nocates">
+<table class="table table-hover">
+    <thead class="table table-hover table-dark">
+        
+        <tr>
+            <th>Mã</th>
+            <th>Chất liệu sản phẩm</th>
+            <th>Kích thước</th>
+            <th><i class="ri-settings-5-fill"></i><i class="ri-settings-5-fill"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let cate of materials; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{cate.materialName}}</td>    
+            <td>{{cate.size}}</td>    
+            <td>
+                <a class="btn btn-sm" data-toggle="modal"
+                data-target="#editCategoryModal" (click)="openEditModal(cate)"><i class="ri-edit-2-line"></i></a>
+              |
+                <a class="btn btn-sm" data-toggle="modal"
+                data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;" (click)="openConfirmDeleteModal(cate.materialID)">
+                <i class="ri-delete-bin-7-line"></i></a>
+            </td>
+        </tr>
+    
+        
+    </tbody>
+</table>
+</div>
+
+
+<ng-template #nocates>
+    <p>Không có sản phẩm nào.</p>
+</ng-template>
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCategoryLabel">Thêm Chất Liệu Sản Phẩm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="materialName">Tên Màu</label>
+              <input formControlName="materialName" type="text" class="form-control" id="materialName" placeholder="Nhập Chất Liệu" required>
+            </div>
+            <div class="form-group">
+                <label for="size">Kích thước</label>
+                <input type="text" class="form-control" id="size" formControlName="size" placeholder="Nhập kích thước"required>
+              </div>
+          
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" [disabled]="materialForm.invalid">Thêm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal Sửa Danh Mục -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCategoryLabel">Sửa Chất Liệu</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editMaterialForm" (ngSubmit)="onEditSubmit()">
+                <div class="form-group">
+                  <label for="materialName">Chất liệu</label>
+                  <input type="text" class="form-control" id="materialName" formControlName="materialName" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="materialName">Kích thước</label>
+                    <input type="text" class="form-control" id="size" formControlName="size" required>
+                  </div>
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="editMaterialForm.invalid">Lưu</button>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+      aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Bạn có chắc chắn muốn xóa chất liệu này không?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="idToDelete !== null ? deleteMaterial(idToDelete) : null">Xóa</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+

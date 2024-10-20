@@ -1,0 +1,20 @@
+.ri-delete-bin-fill{
+    font-size: 15px;
+    color:crimson;
+}
+.ri-delete-bin-fill:hover{
+    font-size: 15px;
+    color:crimson;
+}
+
+div {
+    width: 100%;
+}
+h3{
+    color:crimson;
+}
+
+p {
+    color:crimson;
+    font-size: 20px;
+}

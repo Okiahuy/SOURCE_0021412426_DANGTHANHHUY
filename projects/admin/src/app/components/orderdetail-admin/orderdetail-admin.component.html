@@ -1,0 +1,41 @@
+<br>
+<h2>ĐƠN HÀNG CHI TIẾT</h2>
+<br>
+<div *ngIf="orderdetailItems.length > 0; else emptyCart">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Hình Ảnh</th>
+          <th>Màu Sắc</th>
+          <th>Dành Cho</th>
+          <th>Chất Liệu</th>
+          <th>Số Lượng</th>
+          <th>Giá</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orderdetailItems; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td><img [src]="'http://localhost:8081/uploads/'+item.productImage" alt="Product Image" width="100" height="100"></td>
+         
+          <td>{{ colors[item.productColor] }}</td> <!-- Hiển thị tên màu -->
+          <td>{{ categories[item.productCategory] }}</td> 
+          <td>{{ materials[item.productMaterial] }}</td>
+          
+          <td>{{item.quantity}}</td>
+          <td>{{ item.price | currency: 'VND':'':'1.0-0'}} đ</td>
+        </tr>
+      </tbody>
+    </table>
+    
+</div>
+
+<ng-template #emptyCart>
+  <br>
+  <div class="alert alert-primary text-center">
+      <h4>Chưa có đơn hàng nào được thanh toán</h4>
+       </div>
+</ng-template>
+

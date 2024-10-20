@@ -1,0 +1,83 @@
+<div *ngIf="Message" id="a" class="alert alert-success" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+  <button type="button" class="close" (click)="Message = null" aria-hidden="true">&times;</button>
+  <strong>{{ Message }}</strong>
+</div>
+<br>
+<h2>DANH SÁCH ĐƠN HÀNG</h2>
+<br>
+
+<div class="form-group mb-3">
+  <label for="statusSelect">Lọc theo trạng thái:</label>
+  <select 
+    id="statusSelect" 
+    class="form-control" 
+    [(ngModel)]="selectedStatus" 
+    (change)="filterOrders()"
+  >
+    <option value="">Tất cả</option>
+    <option value="1">Đơn hàng mới</option>
+    <option value="2">Đã duyệt</option>
+    <option value="3">Đã nhận</option>
+    <option value="4">Đã hủy</option>
+  </select>
+</div>
+<br>
+<div *ngIf="orderItems.length > 0; else emptyCart">
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Mã Đơn</th>
+          <th>Ngày Đặt</th>
+          <th>Trạng Thái</th>
+          <th>Phương Thức Thanh Toán</th>
+          <th>Tổng tiền</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredOrders; let i = index">
+          <td>{{ i + 1 }}</td>
+           <td>{{item.code}}</td>
+         
+           <td>{{ convertStringToDate(item.orderDate) | date:'dd/MM/yyyy' }}</td>
+         
+           <td>
+            <ng-container *ngIf="item.status == 1">Đơn hàng mới</ng-container>
+            <ng-container *ngIf="item.status == 2">Đã duyệt</ng-container>
+            <ng-container *ngIf="item.status == 3">Đã nhận</ng-container>
+            <ng-container *ngIf="item.status == 4">Đã hủy</ng-container>
+            <ng-container *ngIf="item.status == 10">Đã đánh giá</ng-container>
+          </td>
+
+          <td *ngIf="item.paymentID==1">Thanh toán khi nhận hàng</td>
+          <td>{{ item.totalPrice | currency: 'VND':'':'1.0-0' }} đ</td>
+
+          <td>
+          
+           <a class="btn btn-sm btn-info" [routerLink]="['/order', item.orderID]">Xem chi tiết</a> |
+
+           <a class="btn btn-sm btn-primary" *ngIf="item.status==1" 
+           (click)="updateStatusOrder(item.orderID)">Duyệt</a> 
+
+           <a class="btn btn-sm btn-success" *ngIf="item.status==2" [routerLink]="['/orderinvoice', item.orderID]">IN</a>
+           <a class="btn btn-sm btn-warning" *ngIf="item.status==3" 
+           >Hoàn thành</a>
+           <a class="btn btn-sm btn-warning" *ngIf="item.status==10" 
+           >Đã đánh giá</a>
+           <a class="btn btn-sm btn-danger" *ngIf="item.status==4"(click)="deleteOrder(item.orderID)">XÓA</a>
+          
+          </td>
+        </tr>
+      </tbody>
+    </table>
+   
+</div>
+<ng-template #emptyCart>
+    <br>
+    <div class="alert alert-primary text-center">
+        <h4>Chưa có đơn hàng nào được thanh toán</h4>
+         </div>
+  </ng-template>
+
+

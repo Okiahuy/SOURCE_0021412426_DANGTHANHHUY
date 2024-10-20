@@ -1,0 +1,160 @@
+<div id="success-alert" class="alert alert-success" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- bài báo đã được thêm thành công!</strong>
+  </div>
+  
+  <div id="edit-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- bài báo đã được sửa thành công!</strong>
+  </div>
+  
+  <div id="del-alert" class="alert alert-success" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- bài báo đã được Xóa thành công!</strong>
+  </div>
+  
+  <div id="err-already" class="alert alert-danger" style="transition: ease 3s; display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Lỗi! -- Tên bài báo đã tồn tại!</strong>
+  </div>
+
+  <div id="err-data" class="alert alert-danger" style="transition: ease 3s; display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Lỗi! -- Dữ liệu không hợp lệ!</strong>
+  </div>
+<h2>Danh sách bài báo</h2>
+
+<hr>
+        <a class="btn btn-success"style="padding: 5px; font-size: 15px; background: #198754; color:white;" data-toggle="modal" data-target="#addProductModal">
+            <i class="bi bi-pencil"></i> THÊM BÀI BÁO
+        </a>
+
+    <br>
+    <br>
+<div *ngIf="newspapers.length > 0; else noProducts">
+<table class="table table-hover">
+    <thead class="table table-hover table-dark">
+        <tr>
+            <th>Mã</th>
+            <th style="max-width: 150px;">Tiêu đề</th>
+          
+            <th style="max-width: 200px;">Mô tả</th>
+            <th>Hình ảnh</th>
+            <th><i class="ri-settings-5-fill"></i><i class="ri-settings-5-fill"></i></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let new of newspapers; let i = index">
+            <td>{{i +1}}</td>
+            <td class="table-cell">{{new.title}}</td>
+            <td class="table-cell" style="max-width: 300px;"><strong>{{ new.description }}</strong></td>
+            <td><img [src]="'http://localhost:8081/uploads/'+ new.imageUrl" width="70" height="70"></td>
+            <td>
+              <a class="btn btn-sm" data-toggle="modal"
+                data-target="#editProductModal" (click)="openEditModal(new)"><i class="ri-edit-2-line"></i>
+              </a>
+                <a class="btn btn-sm" data-toggle="modal" class="btn btn-sm" data-toggle="modal"
+                data-target="#deleteProductModal" (click)="openDeleteModal(new.id)"><i class="ri-delete-bin-7-line"></i></a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<ng-template #noProducts>
+    <p>Không có bài báo nào.</p>
+</ng-template>
+
+  <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm bài báo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="newspaperForm" (ngSubmit)="addNewspaper()">
+            <div class="form-group">
+              <label for="title_new">Tiêu đề bài báo</label>
+              <input type="text" class="form-control" id="productName" formControlName="title" required>
+            </div>
+          
+            <div class="form-group">
+              <label for="productDescription">Mô Tả</label>
+              <textarea class="form-control" id="productDescription" formControlName="description" rows="10" required></textarea>
+            </div>
+            <div data-mdb-input-init class="form-outline mb-4">
+              <label class="form-label" for="form2Example11">Chọn ảnh</label>
+              <input type="file" class="form-control" multiple (change)="onFileSelected($event)" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary pull-right" [disabled]="!newspaperForm.valid">Lưu</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal Sửa Sản Phẩm -->
+ <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="editProductModalLabel">Sửa Bài Báo</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editNewspaperForm" (ngSubmit)="updateNewspaper()">
+            <div class="form-group">
+              <label for="editNewspaperName">Tiêu đề bài báo</label>
+              <input type="text" class="form-control" id="title_new" formControlName="title" required>
+            </div>
+            <div class="form-group">
+              <label for="editNewspaperDescription">Mô Tả</label>
+              <textarea class="form-control" id="editProductDescription" formControlName="description" rows="10" required></textarea>
+            </div>
+           
+            <div class="form-group">    
+                <label for="editNewspaperImage">Hình ảnh</label>
+                <img [src]="'http://localhost:8081/uploads/'+ imageUrl" width="100" height="100">
+                <input type="file" class="form-control" multiple (change)="onFileSelectedUpdate($event)"/>
+          </div>
+            <!-- <input type="number" hidden="true" class="form-control" id="productproductID" formControlName="productID"> -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-success pull-right">Lưu</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <!-- Modal Xóa Sản Phẩm -->
+<div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="deleteProductModalLabel">Xóa bài báo</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa bài báo này không?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-danger pull-right" (click)="idToDelete !== null ? deleteNewspaper(idToDelete) : null" data-dismiss="modal">Xóa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

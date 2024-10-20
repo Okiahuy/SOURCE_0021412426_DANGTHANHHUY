@@ -1,0 +1,70 @@
+img{
+    border-radius: 50%;
+}
+.navbar{
+    background-color: rgb(44, 44, 44);
+    /* justify-content: center;
+    align-items: center;
+    text-align: center; */
+}
+.collapse{
+    justify-content: center;
+}
+
+
+.nav-link{
+    color:aliceblue;
+    font-size: 20px;
+}
+.nav-item{
+    padding-left: 15px;
+    top:2px;
+}
+.nav-link:hover{
+    color: darkorange;
+    font-size: 20px;
+    top:2px;
+}
+i{
+    position: relative;
+    top:2px;
+}
+.ri-shopping-cart-2-line{
+    font-size: 40px;
+}
+#input-search{
+    width: 950px;
+    height: 40px;
+    border-radius: 3px;
+}
+
+.soluonggio{
+    position: relative;
+    color:white;
+    width:20px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: darkorange;
+    text-align: center;
+    top:-65px;
+    right:-55px;
+}
+
+/*  */
+.dropdown{
+    width: 100%;
+    
+}
+.dropdown-menu{
+    position: absolute;
+    z-index: 9999;
+}
+.dropdown-item{
+    cursor: pointer;
+}
+.nav-link1{
+    color:aliceblue;
+    font-size: 22px;
+}
+
+

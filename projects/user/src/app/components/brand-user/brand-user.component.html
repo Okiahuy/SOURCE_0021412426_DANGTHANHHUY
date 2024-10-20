@@ -1,0 +1,88 @@
+
+<div *ngIf="Message" id="a" class="alert alert-success" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" (click)="Message = null" aria-hidden="true">&times;</button>
+    <strong>{{ Message }}</strong>
+  </div>
+  
+<br>
+<div class="alert alert-warning text-center">
+    <button type="button" class="close" data-dismiss="alert"></button>
+     THƯƠNG HIỆU CỦA CHÚNG TÔI
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " style="display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 100px;" >
+
+    
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <aside class="aside">
+            <h3 class="brand-aside"><i class="ri-menu-line"></i>Thương Hiệu</h3>
+            <hr style="background-color: white;">
+            <ul>
+              <li class="li-aside" *ngFor="let brand of brands" (click)="filterByBrand(brand.brandID)">
+                <i class="ri-bookmark-fill"></i>{{ brand.name }}
+              </li>
+            </ul>
+          
+            <h3 class="brand-aside"><i class="ri-menu-line"></i>Danh Mục</h3>
+            <hr style="background-color: white;">
+            <ul>
+              <li class="li-aside" *ngFor="let category of categories" (click)="filterByCategory(category.categoryID)">
+                <i class="ri-bookmark-fill"></i>{{ category.name }}
+              </li>
+            </ul>
+          </aside>
+    </div>
+    
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" *ngIf="products.length > 0; else noProducts" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        <div class="box-product text-center" *ngFor="let product of products">
+            <p class="product-disprice" *ngIf="product.disPrice<0"></p>
+            <p class="product-disprice" *ngIf="product.disPrice>0">{{product.disPrice}}%</p>
+            <a [routerLink]="['/product', product.productID]" class="xem-chitiet">
+                <div>
+                    <img id="img-product" [src]="'http://localhost:8081/uploads/'+ product.imageUrl">
+                </div>
+            </a>
+            <hr>
+                <h5 class="product-name">{{product.name}}</h5>
+    
+               
+                <div class="price-container" *ngIf="product.price>0 && product.disPrice<=0">
+                    <span class="discounted-price" >{{ product.price | currency: 'VND':'':''}} đ</span>
+                </div>
+                <div class="price-container" *ngIf="product.disPrice>0">
+                    <span class="original-price">{{ product.price | currency: 'VND':'':''}} đ</span>
+                    <span class="discounted-price">{{ (product.price * (1 - product.disPrice / 100)) | currency: 'VND':'':'1.0-0' }}</span>  
+                </div>
+    
+                <button type="button" class="btn btn-warning" *ngIf="fullName==null && userID==null" (click)="onclick()">ĐĂNG NHẬP</button>
+                <button type="button" class="btn btn-warning" *ngIf="fullName && userID" (click)="addProductToCart(product.productID, (product.price * (1 - product.disPrice / 100)))"><i class="ri-shopping-cart-line"></i> Thêm vào giỏ</button>
+    
+    
+                <div class="heart-container" *ngIf="fullName && userID">
+                    <button class="btn-favourite" (click)="toggleFavorite(product.productID)" *ngIf="!product.favorited">
+                      <i class="ri-heart-line" [class.favorited]="product.favorited"></i>
+    
+                    </button>
+    
+                    <button class="btn-favourite" (click)="toggleFavorite(product.productID)" *ngIf="product.favorited">
+                       <!-- <img class="img_lovehome" [src]="'/heart-filove.png'"> -->
+                       <i class="ri-heart-fill"></i>
+                    </button>
+                    <span class="heart-text">{{ product.favorited ? 'Đã thích' : 'Yêu thích' }}</span>
+                  </div>
+    
+        </div>
+    </div>
+    
+    
+    <ng-template #noProducts>
+        
+        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+            <h1>Không có sản phẩm nào liên quan.</h1>
+        </div>
+        
+       
+    </ng-template>
+        
+</div>
+

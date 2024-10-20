@@ -1,0 +1,77 @@
+<div id="login-alert" class="alert alert-success" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Đăng nhập thành công!</strong>
+</div>
+<div id="login-alert-invalid" class="alert alert-warning" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Vui lòng điền đầy đủ thông tin!</strong>
+</div>
+<div id="login-alert-miss" class="alert alert-danger" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Đăng nhập thất bại - sai tên tài khoản hoặc mật khẩu!</strong>
+</div>
+
+<section class="h-100 gradient-form" style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card rounded-3 text-black">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="card-body p-md-5 mx-md-4">
+  
+                  <div class="text-center">
+                    <img src="https://www.watchstore.vn/images/products/others/2024/large/untitled-2-2015150859-1396757167-1712670764.webp"
+                      style="width: 100px; height:100px;">
+                    <h4 class="mt-1 mb-5 pb-1">CHÀO MỪNG BẠN ĐẾN VỚI WATCH-LUXURY</h4>
+                  </div>
+                  <form action="" method="post" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                   
+                  
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <label class="form-label" for="form2Example11">Tên đăng nhập</label>
+                      <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập..." tabindex="1" formControlName="username" autocomplete="off"/>
+                    </div>
+
+                   
+                  
+                    <div data-mdb-input-init class="form-outline mb-4">
+                      <label class="form-label" for="form2Example22">Mật khẩu</label>
+                      <input type="password" id="password" class="form-control" placeholder="*******" tabindex="2" formControlName="password">
+                    </div>
+                  
+                    <div class="text-center pt-1 mb-5 pb-1">
+                      <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">
+                        Đăng nhập
+                      </button>
+                      <!-- <a class="text-muted" href="#!">Quên mật khẩu</a> -->
+                    </div>
+                  
+                    <div class="d-flex align-items-center justify-content-center pb-4">
+                      <p class="mb-0 me-2">Chưa có tài khoản?</p>
+                      <a data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger" href="/user/register-user">Đăng ký</a>
+                    </div>
+                  </form>
+                  
+  
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center text-center gradient-custom-2">
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                  <h4 class="mb-4">CẢM ƠN BẠN ĐÃ THAM KHẢO CÁC SẢN PHẨM CỦA CHÚNG TÔI</h4>
+                  
+                  <div class="bg-dark jumbotron text-center">
+                   
+                    <h3 class="mb-4">Dịch vụ chăm sóc khách hàng chu đáo</h3>
+                    <p>Hỗ trợ tận tình từ khâu chọn đồng hồ cho đến bảo hành sau mua.</p>
+                    <p class="small mb-0">Đa dạng các loại sản phẩm đồng hồ</p>
+                    
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

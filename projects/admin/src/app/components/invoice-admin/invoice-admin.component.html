@@ -1,0 +1,130 @@
+<br>
+<br>
+<div *ngIf="orderItems.length > 0;">
+    <div id="print-section"> 
+        <div class="wrapper">
+          <!-- Main content -->
+          <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+              <div class="col-xs-12">
+                <h2 class="page-header">
+                  <i class="fa fa-globe"></i> WATCH-LUXURY <br>
+                  <small class="pull-right" style="color: darkorange; font-size: 17px;">Ngày: {{currentTime}}</small>
+                </h2>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info" style="width: 100%; display: flex; flex-direction: row; flex-wrap: wrap;">
+              <div class="col-sm-4 invoice-col" style="margin-right:30px;">
+                Từ
+                <address>
+                  <strong style="color: crimson; font-size: 20px;">WATCH-LUXURY</strong><br>
+                  Cao Lãnh Đồng Tháp<br>
+                  Huyện Tháp Mười<br>
+                  Số điện thoại: +093094934<br>
+                 
+                </address>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col" style="margin-right:30px;">
+                Đến
+                <address>
+                  <strong style="color: crimson; font-size: 20px;">
+                    Khách Hàng: {{ user?.fullname }}
+                  </strong><br>
+                  Địa chỉ của khách: {{ user?.address }}<br>
+                  Số điện thoại: {{ user?.phone }}<br>
+                </address>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                <b style="color: crimson; font-size: 20px;">HÓA ĐƠN: ĐỒNG HỒ</b>
+                <br>
+                <b style="color: crimson; font-size: 13px;">MÃ HÓA ĐƠN - </b> {{ orderItems[0].code }}<br>
+                <b style="color: crimson; font-size: 13px;">NGÀY ĐẶT</b>  {{ convertStringToDate(orderItems[0].orderDate) | date:'dd/MM/yyyy' }} <br>
+                <b style="color: crimson; font-size: 13px;">ĐỊA CHỈ {{ user?.address }}</b>
+              </div>
+              <!-- /.col -->
+            </div>
+        
+            <div class="row">
+              <div class="col-xs-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th style="color: darkorange; font-size: 13px;">STT</th>
+                    <th style="color: darkorange; font-size: 13px;">TÊN SẢN PHẨM</th>
+                    <th style="color: darkorange; font-size: 13px;">THƯƠNG HIỆU</th>
+                    <th style="color: darkorange; font-size: 13px;">MÀU SẮC</th>
+                    <th style="color: darkorange; font-size: 13px;">MÔ TẢ</th>
+                    <th style="color: darkorange; font-size: 13px;">DÀNH CHO</th>
+                    <th style="color: darkorange; font-size: 13px;">CHẤT LIỆU</th>
+                  </tr>
+                  </thead>
+                  <hr>
+                  <tbody>
+                  <tr *ngFor="let item of orderdetailItems; let i = index">
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{i+1}}</td>
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{item.productName}}</td>
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{ brands[item.productBrand] }}</td>    
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{ colors[item.productColor] }}</td> 
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{item.productDescription}}</td>
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{ categories[item.productCategory] }}</td> 
+                    <td style="color: rgb(71, 41, 3); font-size: 10px;">{{ materials[item.productMaterial] }}</td>
+
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        
+            <div class="row">
+              <!-- accepted payments column -->
+              <div class="col-xs-6">
+                <p class="lead" style="color: crimson;">PHƯƠNG THỨC THANH TOÁN</p>
+                <hr>
+                <p class="text-muted well well-sm no-shadow" style="margin-top: 10px; color:darkorange">
+                  THANH TOÁN KHI NHẬN HÀNG
+                </p>
+              </div>
+              <br>
+              <!-- /.col -->
+              <div class="col-xs-6">
+                <p class="lead">NGÀY ĐẶT: {{ convertStringToDate(orderItems[0].orderDate) | date:'dd/MM/yyyy' }}</p>
+                <hr>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tr>
+                      <th style="width:100%; color:crimson;">TỔNG TIỀN:</th>
+                      <td style="width:100%; color: crimson;"> {{ orderItems[0].totalPrice  | currency: 'VND':'':'1.0-0' }} đ</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </section>
+        
+          <!-- /.content -->
+        </div>
+        </div>
+</div>
+
+<br>
+
+<!-- <button class="btn btn-sm btn-info" (click)="printInvoice()">In Đơn Hàng</button> -->
+
+<br>
+
+<button class="btn btn-sm btn-info" printSectionId="print-section" ngxPrint>IN ĐƠN HÀNG</button> 
+<br>
+
+
+
+
+

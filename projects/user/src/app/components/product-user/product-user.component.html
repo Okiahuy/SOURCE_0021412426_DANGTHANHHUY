@@ -1,0 +1,71 @@
+<div *ngIf="Message" id="a" class="alert alert-success" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" (click)="Message = null" aria-hidden="true">&times;</button>
+    <strong>{{ Message }}</strong>
+  </div>
+<br>
+<div class="container">
+    <!-- <div>
+        <img id="img-bg" 
+        width="100%" height="350">
+    </div> -->
+    <div *ngIf="showImage">
+        <img [src]="imageUrl" alt="Image" width="100%" height="350">
+    </div>
+    <div *ngIf="showImage2">
+        <img [src]="imageUrl2" alt="Image" width="100%" height="350">
+    </div>
+    <div *ngIf="showImage3">
+        <img [src]="imageUrl3" alt="Image" width="100%" height="350">
+    </div>
+</div>
+<br>
+<div class="alert alert-warning text-center">
+    <button type="button" class="close" data-dismiss="alert"></button>
+     CÁC SẢN PHẨM CHÍNH
+</div>
+<div *ngIf="products.length > 0; else noProducts">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " style="display: flex; flex-wrap: wrap; justify-content: center;" >
+        
+        <div class="box-product text-center" *ngFor="let product of products">
+            <p class="product-disprice" *ngIf="product.disPrice<0"></p>
+            <p class="product-disprice" *ngIf="product.disPrice>0">{{product.disPrice}}%</p>
+            <a [routerLink]="['/product', product.productID]" class="xem-chitiet">
+                <div>
+                    <img id="img-product" [src]="'http://localhost:8081/uploads/'+ product.imageUrl">
+                </div>
+            </a>
+            <hr>
+                <h5 class="product-name">{{product.name}}</h5>
+    
+               
+                <div class="price-container" *ngIf="product.price>0 && product.disPrice<=0">
+                    <span class="discounted-price" >{{ product.price | currency: 'VND':'':''}} đ</span>
+                </div>
+                <div class="price-container" *ngIf="product.disPrice>0">
+                    <span class="original-price">{{ product.price | currency: 'VND':'':''}} đ</span>
+                    <span class="discounted-price">{{ (product.price * (1 - product.disPrice / 100)) | currency: 'VND':'':'1.0-0' }}</span>  
+                </div>
+    
+                <button type="button" class="btn btn-warning" *ngIf="fullName==null && userID==null" (click)="onclick()">ĐĂNG NHẬP</button>
+                <button type="button" class="btn btn-warning" *ngIf="fullName && userID" (click)="addProductToCart(product.productID, (product.price * (1 - product.disPrice / 100)))"><i class="ri-shopping-cart-line"></i> Thêm vào giỏ</button>
+    
+    
+                <div class="heart-container" *ngIf="fullName && userID">
+                    <button class="btn-favourite" (click)="toggleFavorite(product.productID)" *ngIf="!product.favorited">
+                      <i class="ri-heart-line" [class.favorited]="product.favorited"></i>
+    
+                    </button>
+    
+                    <button class="btn-favourite" (click)="toggleFavorite(product.productID)" *ngIf="product.favorited">
+                       <!-- <img class="img_lovehome" [src]="'/heart-filove.png'"> -->
+                       <i class="ri-heart-fill"></i>
+                    </button>
+                    <span class="heart-text">{{ product.favorited ? 'Đã thích' : 'Yêu thích' }}</span>
+                  </div>
+    
+        </div>
+    </div>
+    </div>
+    <ng-template #noProducts>
+        <p>Không có sản phẩm nào.</p>
+    </ng-template>

@@ -1,0 +1,166 @@
+<div id="success-alert" class="alert alert-success" style="display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Danh mục đã được thêm thành công!</strong>
+  </div>
+  
+  <div id="edit-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Danh mục đã được sửa thành công!</strong>
+  </div>
+  
+  <div id="del-alert" class="alert alert-success" style="display:none;position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Thành công! -- Danh mục đã được Xóa thành công!</strong>
+  </div>
+  
+  <div id="err" class="alert alert-danger" style="transition: ease 3s; display:none; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Lỗi! -- Không thể xóa vì sản phẩm đã chứa Danh Mục!</strong>
+  </div>
+  
+  <div *ngIf="errorMessage" id="t" class="alert alert-danger" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" (click)="errorMessage = null" aria-hidden="true">&times;</button>
+    <strong>Lỗi!--{{ errorMessage }}</strong>
+  </div>
+  
+  <div *ngIf="errorSuccess" class="alert alert-success" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+    <button type="button" class="close" (click)="errorSuccess = null" aria-hidden="true">&times;</button>
+    <strong>Thành công!--{{ errorSuccess }}</strong>
+  </div>
+  
+<h2>Danh Mục Sản Phẩm</h2>
+<div class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" id="" placeholder="Tìm kiếm . . . . ." #searchName>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="searchCategories(searchName.value)"><i class="fa fa-search"></i></button>
+  </div>
+
+<hr>
+
+
+  <a class="btn btn-sm btn-success" style="padding: 5px; font-size: 15px; background: #198754; color:white;" data-toggle="modal" data-target="#addCategoryModal">
+        THÊM DANH MỤC SẢN PHẨM 
+  </a>
+    
+<br>
+<br>
+<div *ngIf="cates.length > 0; else nocates">
+<table class="table table-hover">
+    <thead class="table table-hover table-dark">
+        
+        <tr>
+            <th>Mã</th>
+            <th>Tên</th>
+            <th>Mô tả</th>
+            <th><i class="ri-settings-5-fill"></i><i class="ri-settings-5-fill"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let cate of cates; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{cate.name}}</td>    
+            <td>{{cate.description}}</td>
+            <td>
+                <a class="btn btn-sm" data-toggle="modal"
+                data-target="#editCategoryModal" (click)="openEditModal(cate)"><i class="ri-edit-2-line"></i></a>
+              |
+                <a class="btn btn-sm" data-toggle="modal"
+                data-target="#confirmDeleteModal" style="padding: 5px; font-size: 15px;" (click)="openConfirmDeleteModal(cate.categoryID)">
+                <i class="ri-delete-bin-7-line"></i></a>
+            </td>
+        </tr>
+    
+        
+    </tbody>
+</table>
+</div>
+
+
+<ng-template #nocates>
+    <p>Không có sản phẩm nào.</p>
+</ng-template>
+
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCategoryLabel">Thêm Danh Mục Sản Phẩm</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="categoryName">Tên danh mục</label>
+              <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nhập tên danh mục" required>
+            </div>
+            <div class="form-group">
+                <label for="addMoTa">Mô Tả</label>
+                <textarea formControlName="description" class="form-control"  id="description" rows="3" required></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Thêm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal Sửa Danh Mục -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCategoryLabel">Sửa Danh Mục</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="editCategoryForm" (ngSubmit)="onEditSubmit()">
+                <div class="form-group">
+                  <label for="editTenDanhMuc">Tên danh mục</label>
+                  <input type="text" class="form-control" id="editTenDanhMuc" formControlName="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="editMoTa">Mô tả</label>
+                  <textarea class="form-control" id="editMoTa" formControlName="description" rows="3" required></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="editCategoryForm.invalid">Lưu</button>
+                </div>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+      aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="confirmDeleteLabel">Xác nhận xóa</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  Bạn có chắc chắn muốn xóa danh mục này không?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="idToDelete !== null ? deleteCategory(idToDelete) : null">Xóa</button>
+              </div>
+          </div>
+      </div>
+  </div>

@@ -1,0 +1,25 @@
+h5{
+    font-size: 18px;
+   
+}
+
+h2{
+    font-size: 25px;
+}
+h3{
+    font-size: 20px;
+    font-weight: bold;
+}
+p{
+    font-size: 20px;
+}
+a{
+    color: black;
+}
+a:hover{
+    color: aliceblue;
+}
+i{
+    font-size: 30px;
+    padding: 20px;
+}

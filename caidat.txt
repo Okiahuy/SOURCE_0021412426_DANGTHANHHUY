@@ -1,0 +1,6 @@
+ng new watch-project --create-application=false
+Lệnh này tạo một dự án mới mà không có ứng dụng chính mặc định.
+Sau đó, bạn có thể thêm ứng dụng vào dự án này.
+
+ng generate application admin  --> chạy ng serve admin
+ng generate application user   --> chạy ng serve user

@@ -1,0 +1,16 @@
+div{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+
+}
+
+.btn{
+    width: 100px;
+    cursor: pointer;
+}
+.btn1{
+    width: 100%;
+}
+

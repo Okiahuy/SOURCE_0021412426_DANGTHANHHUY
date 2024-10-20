@@ -1,0 +1,150 @@
+.box-product{
+    margin-top: 20px;
+    border: 1px solid #fcfcfa;
+    margin-right: 5px;
+    width: 250px;
+    height: 400px;
+    background-color: rgb(253, 253, 252);
+    box-shadow: 1px 3px 10px 10px rgba(165, 165, 165, 0.5);
+}
+#img-product{
+    width: 200px;
+    height: 250px;
+}
+#img-product:hover{
+    width: 220px;
+    height: 250px;
+    transition: ease 0.4s;
+}
+
+.product-name{
+    color: black;
+}
+
+.product-disprice{
+    position: absolute;
+
+    background-color: #f7504a;
+    color:rgb(250, 248, 248);
+    font-size: 20px;
+    font-family: fantasy;
+    border: 0px;
+    width: 50px;
+}
+.price-container {
+    font-size: 18px;
+  }
+  
+  .original-price {
+    text-decoration: line-through; /* Gạch ngang giá cũ */
+    color: #999; /* Màu xám cho giá cũ */
+    margin-right: 10px; /* Khoảng cách giữa giá cũ và giá mới */
+  }
+  
+  .discounted-price {
+    color: #f00; /* Màu đỏ cho giá đã giảm */
+    font-weight: bold;
+  }
+
+.xem-chitiet{
+    color:aliceblue;
+
+}
+.btn-favourite{
+    background-color: white;
+    cursor: pointer;
+    border: #fff;
+}
+.btn-favourite:hover{
+  background-color: white;
+  cursor: pointer;
+  border: #fff;
+}
+.xem-chitiet:hover{
+    color:aliceblue;
+    text-underline-offset: none;
+}
+.ri-heart-line{
+  position: relative;
+  left: 18%;
+  top: 10px;
+  color:crimson;
+  font-size: 30px;
+}
+.ri-heart-fill{
+  position: relative;
+  left: 18%;
+  top: 10px;
+  color:crimson;
+  font-size: 30px;
+}
+.ri-heart-line:hover{
+    color:crimson;
+    font-size: 30px;
+}
+.heart-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .heart-text {
+    visibility: hidden;
+    background-color: rgb(88, 87, 87);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute;
+    top: -30px; /* điều chỉnh vị trí */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  
+  .heart-container:hover .heart-text {
+    visibility: visible;
+  }
+
+/* trái */
+.col-xs-3 {
+    background-color: rgb(78, 78, 78);
+    box-shadow: 1px 3px 10px 10px rgba(165, 165, 165, 0.5);
+}
+/* tras */
+
+/* phải */
+.col-xs-9 {
+    background-color: rgb(218, 218, 213);
+    box-shadow: 1px 3px 10px 10px rgba(165, 165, 165, 0.5);
+}
+/* phải */
+  
+.aside {
+    margin-top: 20px;
+   
+}
+
+.brand-aside {
+    font-family: 'Times New Roman', Times, serif;
+    color:white;
+}
+
+.li-aside{
+    font-family: 'Times New Roman', Times, serif;
+    list-style: none;
+    color:white;
+    margin-bottom: 10px;
+}
+.li-aside:hover{
+    font-family: 'Times New Roman', Times, serif;
+    list-style: none;
+    cursor: pointer;
+    background-color: rgb(245, 182, 9);
+}
+
+i{
+    position: relative;
+    top:3px;
+    left: -3px;
+}
+  

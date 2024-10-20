@@ -1,0 +1,14 @@
+h3 {
+    color:darkorange;
+
+}
+
+p{
+    color:rgb(37, 36, 37);
+}
+
+.bg-warning:hover{
+    position: relative;
+    top: -10px;
+    transition: 3s ease;
+}

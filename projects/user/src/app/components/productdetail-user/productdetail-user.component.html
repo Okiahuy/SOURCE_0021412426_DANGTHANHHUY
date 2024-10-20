@@ -1,0 +1,108 @@
+<div *ngIf="Message" id="a" class="alert alert-success" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+  <button type="button" class="close" (click)="Message = null" aria-hidden="true">&times;</button>
+  <strong>{{ Message }}</strong>
+</div>
+
+<div class="product-detail">
+  <div class="product-image">
+    <img [src]="'http://localhost:8081/uploads/'+ product[0].imageUrl" class="image"/>
+  </div>
+
+  <div class="product-info">
+     <h2>{{ product[0].name }}</h2>
+     <div class="price-container" *ngIf="product[0].price>0 && product[0].disPrice<=0">
+      <span class="discounted-price" >{{ product[0].price | currency: 'VND':'':''}} đ</span>
+  </div>
+  <div class="price-container" *ngIf="product[0].disPrice>0">
+      <span class="original-price">{{ product[0].price | currency: 'VND':'':''}} đ</span>
+      <span class="discounted-price">{{ (product[0].price * (1 - product[0].disPrice / 100)) | currency: 'VND':'':'1.0-0' }}</span>
+  </div>
+    <table class="table table-striped">
+    <tbody>
+      <tr>
+        <td><i class="ri-vip-diamond-line"></i> Thương hiệu</td>
+        <td><i class="ri-star-s-fill"></i> {{ brand ? brand.name : 'Đang tải...' }} <i class="ri-star-s-fill"></i></td>
+      </tr>
+      <tr>
+        <td><i class="ri-vip-diamond-line"></i> Sản phẩm dành cho</td>
+        <td><i class="ri-star-s-fill"></i> {{ cate ? cate.name : 'Đang tải...' }} <i class="ri-star-s-fill"></i></td>
+      </tr>
+      <tr>
+        <td><i class="ri-vip-diamond-line"></i> Chất liệu</td>
+        <td><i class="ri-star-s-fill"></i> {{ mate ? mate.materialName : 'Đang tải...' }} <i class="ri-star-s-fill"></i></td>
+      </tr>
+      <tr>
+        <td><i class="ri-vip-diamond-line"></i> Trọng lượng</td>
+        <td><i class="ri-star-s-fill"></i> {{ mate ? mate.size : 'Đang tải...' }} miligram <i class="ri-star-s-fill"></i></td>
+      </tr>
+      <tr>
+        <td><i class="ri-vip-diamond-line"></i> Màu sắc</td>
+        <td><i class="ri-star-s-fill"></i> {{ col ? col.colorName : 'Đang tải...' }} <i class="ri-star-s-fill"></i> </td>
+      </tr>
+    </tbody>
+  </table>
+    <hr>
+    <p class="description"><i class="ri-file-text-line"></i> Mô tả: {{ product[0].description }}</p>
+     <p class="like-count"><i class="ri-thumb-up-line"></i> <span class="span"> {{ likeCount }}</span> Lượt thích </p>
+     <p *ngIf="averageRating<=0">
+      <ng-container>
+        <span>✩✩✩✩✩</span>  <!-- Sao đầy -->
+      </ng-container>
+    </p>
+    <p *ngIf="averageRating!=0">
+      <ng-container *ngFor="let star of getStarsArray(averageRating)">
+        <span *ngIf="star === 1">⭐</span>  <!-- Sao đầy -->
+        <span *ngIf="star === 0.5">✩</span> <!-- Nửa sao -->
+        <span *ngIf="star === 0">✩</span>   <!-- Sao trống -->
+      </ng-container>
+    </p>
+    <button class="btn-add-to-cart" *ngIf="fullName==null && userID==null" (click)="onclick()">ĐĂNG NHẬP ĐỂ THÊM GIỎ HÀNG</button>
+    <button class="btn-add-to-cart" *ngIf="fullName && userID" (click)="addProductToCart(product[0].productID, (product[0].price * (1 - product[0].disPrice / 100)))"><i class="ri-shopping-cart-fill" ></i> Thêm vào giỏ hàng</button>
+  </div>
+</div>
+
+
+
+<div *ngIf="!product" class="loading-message">
+  <p>Đang tải thông tin sản phẩm...</p>
+</div>
+
+
+<br>
+<div class="alert alert-info text-center">
+   Bình luận và đánh giá
+</div>
+
+<br>
+<div *ngIf="averageRating; else noReviews">
+<div *ngIf="reviews.length > 0;">
+
+  <div *ngFor="let review of reviews" class="review-item">
+
+    <h4> {{review.userName}}</h4>
+    <h4><img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png'" width="50" height="50">
+      <!-- Rating - {{ review.startNum }} -->
+      <span *ngIf="review.startNum==1">⭐✩✩✩✩</span>
+      <span *ngIf="review.startNum==2">⭐⭐✩✩✩</span>
+      <span *ngIf="review.startNum==3">⭐⭐⭐✩✩</span>
+      <span *ngIf="review.startNum==4">⭐⭐⭐⭐✩</span>
+      <span *ngIf="review.startNum==5">⭐⭐⭐⭐⭐</span>
+
+    </h4>
+    <p>{{review.reviewDate}} - <strong>{{ review.comment }}</strong></p>
+    <hr />
+
+  </div>
+
+
+</div>
+</div>
+<ng-template #noReviews>
+  <h4 class="text-center">Chưa có đánh giá nào cho sản phẩm này.</h4>
+</ng-template>
+
+
+
+
+
+

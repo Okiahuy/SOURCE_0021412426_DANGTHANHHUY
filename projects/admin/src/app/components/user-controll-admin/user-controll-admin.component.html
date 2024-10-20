@@ -1,0 +1,45 @@
+
+<h2>DANH SÁCH NGƯỜI DÙNG</h2>
+
+<hr>
+<br>
+<br>
+<div *ngIf="userlists.length > 0; else nocates">
+<table class="table table-hover">
+    <thead class="table table-hover table-dark">
+        
+        <tr>
+            <th>Mã</th>
+            <th>Tên đầy đủ</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Tên đăng nhập</th>
+            <th class="table-cell">Mật khẩu</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let cate of userlists; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{cate.fullname}}</td>   
+            <td>{{cate.phone}}</td> 
+            <td>{{cate.address}}</td> 
+            <td>{{cate.username}}</td> 
+            <td class="table-cell">{{cate.password}}</td> 
+            <td>{{cate.email}}</td> 
+            
+        </tr>
+    
+        
+    </tbody>
+</table>
+</div>
+
+
+<ng-template #nocates>
+    <p>Không có người dùng nào.</p>
+</ng-template>
+
+
+

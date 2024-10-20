@@ -1,0 +1,156 @@
+<div *ngIf="Message" id="a" class="alert alert-success" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 700px;">
+  <button class="btn-alere" type="button" class="close" (click)="Message = null" aria-hidden="true">&times;</button>
+  <strong>{{ Message }}</strong>
+</div>
+
+<br>
+
+<br>
+<hr>
+
+
+
+<table class="table table-bordered table-hover">
+    <tbody>
+        <tr>
+            <th><h2>THÔNG TIN CHI TIẾT</h2></th>
+            <td> <a class="btn btn-sm btn-info" [routerLink]="['/userupdate', user[0].userID]"><i class="ri-edit-2-line"></i>Đổi thông tin</a></td>
+        </tr>
+        <tr>
+            <th>HỌ VÀ TÊN:</th>
+            <td>{{user[0].fullname}}</td>
+        </tr>
+        <tr>
+            <th>ĐỊA CHỈ</th>
+            <td>{{user[0].address}}</td>
+        </tr>
+        <tr>
+            <th>EMAIL</th>
+            <td>{{user[0].email}}</td>
+        </tr>
+       
+       
+        <tr>
+            <th>PHONE</th>
+            <td>{{user[0].phone}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div>
+    <h3>LỊCH SỬ ĐẶT HÀNG</h3>
+</div>
+
+<div *ngIf="orderdetailItems.length > 0; else emptyCart">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Hình Ảnh</th>
+            <th>Màu Sắc</th>
+            <th>Dành Cho</th>
+            <th>Chất Liệu</th>
+            <th>Số Lượng</th>
+            <th>Giá</th>
+           <th>
+            Đánh giá
+           </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orderdetailItems; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><img [src]="'http://localhost:8081/uploads/'+item.productImage" alt="Product Image" width="100" height="100"></td>
+           
+            <td>{{ colors[item.productColor] }}</td> <!-- Hiển thị tên màu -->
+            <td>{{ categories[item.productCategory] }}</td> 
+            <td>{{ materials[item.productMaterial] }}</td>
+            
+            <td>{{item.quantity}}</td>
+            <td>{{ item.price | currency: 'VND':'':'1.0-0'}} đ</td>
+            <td>
+              <a class="btn btn-sm btn-warning" [routerLink]="['/user/my']" *ngIf="item.status==2"
+              >
+              Đã Đánh
+            </a> 
+            <a class="btn btn-sm btn-warning" [routerLink]="['/product', item.productID]" *ngIf="orderItem[0].status==10"
+            >
+            Xem
+          </a>
+            <a type="submit" class="btn btn-sm btn-success" [routerLink]="['/user/my']" *ngIf="orderItem[0].status==1"
+            >Mới</a>
+
+            <a type="submit" class="btn btn-sm btn-success"  (click)="openReviewModal(item.productID)"  *ngIf="item.status!=2" data-toggle="modal" data-target="#addCategoryModal1"
+            >Đánh giá</a>
+
+            <a type="submit" class="btn btn-sm btn-danger" [routerLink]="['/user/my']" *ngIf="orderItem[0].status==4" 
+            >Đã hủy</a>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+      
+  </div>
+
+  <ng-template #emptyCart>
+    <br>
+    <div class="alert alert-primary text-center">
+        <h4>Chưa có đơn hàng nào được thanh toán</h4>
+         </div>
+  </ng-template>
+
+
+  <div class="modal" id="addCategoryModal1" tabindex="-1" aria-labelledby="addCategoryModal1" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-danger" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">Đóng lại</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- style="display: none;" -->
+          <div class="review-form-container" *ngIf="fullName && userID;">
+            <h2>Viết Đánh Giá</h2>
+            <form (ngSubmit)="submitReview()">
+              <div>
+                <label for="comment">Nội dung:</label>
+                <textarea id="comment" [(ngModel)]="comment" name="comment"></textarea>
+              </div>
+              <div class="rating-container" >
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="rating" id="star1" value="1" (change)="onRatingChange(1)">
+                  <label class="form-check-label" for="star1">1*</label>
+                </div>
+              
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="rating" id="star2" value="2" (change)="onRatingChange(2)">
+                  <label class="form-check-label" for="star2">2*</label>
+                </div>
+              
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="rating" id="star3" value="3" (change)="onRatingChange(3)">
+                  <label class="form-check-label" for="star3">3*</label>
+                </div>
+              
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="rating" id="star4" value="4" (change)="onRatingChange(4)">
+                  <label class="form-check-label" for="star4">4*</label>
+                </div>
+              
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="rating" id="star5" value="5" (change)="onRatingChange(5)">
+                  <label class="form-check-label" for="star5">5*</label>
+                </div>
+              </div>
+              <button type="submit">Gửi đánh giá</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    
+
+  
